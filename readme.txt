@@ -76,26 +76,15 @@ pri_operate.php in dir qq_friend----------------
 class QqFriend_PriOperate {
 
 	public function SGA_GetTheName(array $inputData) {
-		echo "SGA_GetTheName called\n";
-		var_dump($inputData);
-
-		return array('ret'=>0, 'data'=>'hi, sgs in second dir');
+        return array('ret' => 0, 'data'=> array('msg' => 'hello, sgi', 'input' => $inputData));
 	}
 }
 
 url---------------------------------------------
-http://www.host.com/qq_friend/pri_operate/get_the_name.sgi?data={%22a%22:1,%22b%22:2,%22c%22:3,%22d%22:4,%22e%22:5}&of=json
+http://www.host.com/qq_friend/pri_operate/get_the_name.sgi?data={"a":2,"b":"msg"}&of=json
 
 output-----------------------------------------
-SGA_GetTheName called
-array(5) {
-	["a"]=>	int(1)
-	["b"]=> int(2)
-	["c"]=>	int(3)
-	["d"]=>	int(4)
-	["e"]=>	int(5)
-}
-{"ret":0,"data":"hi, sgs in second dir"}
+{"ret":0,"data":{"msg":"hello, sgi","input":{"a":2,"b":"msg"}}}
 
 =================================================================================
 
