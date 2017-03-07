@@ -201,7 +201,7 @@ class SgiMapper {
 		// step 2. parse the method name
 		$methodName = str_replace(Sgi::SGI_SUFFIX, '', $uriElementArr[$uriElementCnt - 1]); // remove '.sgi' suffix
 		$methodName = ucfirst($methodName); // make first character uppercase
-		$methodName = preg_replace('/_([a-z])/e', 'strtoupper("${1}")', $methodName); // make the character after '_' uppercase
+		$methodName = preg_replace_callback('/_([a-z])/', function ($m) {return strtoupper($m[1]);}, $methodName); // make the character after '_' uppercase
 		$this->_methodName	= Sgi::SGA_PREFIX . $methodName;
 
 		// step 3. parse the file path and class name
@@ -211,7 +211,7 @@ class SgiMapper {
 		for($i = 0; $i < $filePathCnt; ++$i) {
 			$filePath .= $uriElementArr[$i];
 			$cn = ucfirst($uriElementArr[$i]);
-			$cn = preg_replace('/_([a-z])/e', 'strtoupper("${1}")', $cn); // make the character after '_' uppercase
+			$cn = preg_replace_callback('/_([a-z])/', function ($m) {return strtoupper($m[1]);}, $cn); // make the character after '_' uppercase
 			$className .= $cn;
 			if($i + 1 < $filePathCnt) {
 				$filePath   .= '/';
