@@ -35,7 +35,9 @@ support output format:
 2: jsonp
 3: xml
 4: tpl
+5: raw
 
+if use raw output format, sgi echo $output[0] directly.
 =================================================================================
 
 related nginx config:
@@ -78,13 +80,22 @@ class QqFriend_PriOperate {
 	public function SGA_GetTheName(array $inputData) {
         return array('ret' => 0, 'data'=> array('msg' => 'hello, sgi', 'input' => $inputData));
 	}
+
+    public function SGA_TestRaw() {
+        $a = $_REQUEST['a'];
+        return array('success');
+    }
 }
 
 url---------------------------------------------
 http://www.host.com/qq_friend/pri_operate/get_the_name.sgi?data={"a":2,"b":"msg"}&of=json
-
-output-----------------------------------------
+output------------------------------------------
 {"ret":0,"data":{"msg":"hello, sgi","input":{"a":2,"b":"msg"}}}
+
+url---------------------------------------------
+http://www.host.com/qq_friend/pri_operate/test_raw.sgi?a=2
+output------------------------------------------
+success
 
 =================================================================================
 

@@ -68,6 +68,13 @@ abstract class SgiOutput{
 	abstract public function render(array $outputData);
 }
 
+class SgiOutputRaw extends SgiOutput{
+	public function render(array $outputData){
+		header('Content-Type:text/plain;charset=utf-8');
+		echo $outputData[0];
+	}
+}
+
 class SgiOutputJson extends SgiOutput{
 	public function render(array $outputData){
 		header('Content-Type:text/plain;charset=utf-8');
@@ -240,6 +247,7 @@ class Sgi {
 	const SGI_SUFFIX	= '.sgi';
 	const TPL_SUFFIX	= '.html';
 
+	const OF_RAW	= 'raw';
 	const OF_HTML	= 'html';
 	const OF_JSON	= 'json';
 	const OF_XML	= 'xml';
@@ -264,7 +272,7 @@ class Sgi {
 	}
 
 	private static function _genOutputObject($inputObj) {
-		$outputFormat	= $inputObj->get(self::OF_KEY, self::OF_JSON); // default output format is json
+		$outputFormat	= $inputObj->get(self::OF_KEY, self::OF_RAW); // default output format is raw
 		switch($outputFormat){
 			case self::OF_XML:
 				return new SgiOutputXml();
@@ -282,6 +290,9 @@ class Sgi {
 
 			case self::OF_JSON:
 				return new SgiOutputJson();
+
+			case self::OF_RAW:
+				return new SgiOutputRaw();
 
 			default:
 				throw new SgiException('unknown sgi output format, of=[' . $outputFormat . ']');
